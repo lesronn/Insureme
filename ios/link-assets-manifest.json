@@ -1,0 +1,45 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "App/Assets/fonts/Agbalumo-Regular.ttf",
+      "sha1": "b0670b6c5fab78a1f8096936516c010a3134aa1b"
+    },
+    {
+      "path": "App/Assets/fonts/Gilroy-Bold.ttf",
+      "sha1": "eeda33cebb0c6cb6cdbf2af87ef0cebfcb9e9f99"
+    },
+    {
+      "path": "App/Assets/fonts/Gilroy-Heavy.ttf",
+      "sha1": "6a2631b0af0b75a60e8d887d867f95578bb6e1f6"
+    },
+    {
+      "path": "App/Assets/fonts/Gilroy-Light.ttf",
+      "sha1": "3a3bc2fff8192fb3d99827c17eb37a6eb0f8d821"
+    },
+    {
+      "path": "App/Assets/fonts/Gilroy-Medium.ttf",
+      "sha1": "a05d394f3550b31324c7ef6eda6bd09a6bcfb4bd"
+    },
+    {
+      "path": "App/Assets/fonts/Gilroy-Regular.ttf",
+      "sha1": "eae0f6aa553643ae5c2b4da46a422f8d26255bb1"
+    },
+    {
+      "path": "App/Assets/fonts/Sora-Bold.ttf",
+      "sha1": "a90703d8b7152c8635b15caade8cd3b987850092"
+    },
+    {
+      "path": "App/Assets/fonts/Sora-Medium.ttf",
+      "sha1": "faa8a98d604ca71c41aa4ffbbd2bd74bf645abe6"
+    },
+    {
+      "path": "App/Assets/fonts/Sora-Regular.ttf",
+      "sha1": "3b4ed53d52716224736d762d55e9a74d34a980c9"
+    },
+    {
+      "path": "App/Assets/fonts/Sora-SemiBold.ttf",
+      "sha1": "ed7c3980e8ec4a284ddd71276ae50177b54ee0f6"
+    }
+  ]
+}
