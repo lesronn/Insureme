@@ -17,6 +17,10 @@ import AuthStorage from './App/Utils/AuthStorage';
 import {AuthContext} from './App/Config/AuthContext';
 import {ToastProvider} from 'react-native-toast-notifications';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import VehicleInsuranceSignUp from './App/Screens/Home/VehicleInsuranceSignUp';
+import HealthInsuranceSignup from './App/Screens/Home/HealthInsuranceSignup';
+import GeneralInsurance from './App/Screens/Home/GeneralInsurance';
+import GeneralInsuranceignup from './App/Screens/Home/GeneralInsuranceignup';
 
 const App = () => {
   const [user, setUser] = useState();

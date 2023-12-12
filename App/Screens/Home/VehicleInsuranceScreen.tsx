@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import SubHeader from '../../Components/SubHeader';
 import colors from '../../Config/colors';
 import SearchBar from '../../Components/SearchBar';
+import PolicyCard from '../../Components/PolicyCard';
 
 const VehicleInsuranceScreen = ({navigation}: any) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -27,6 +28,17 @@ const VehicleInsuranceScreen = ({navigation}: any) => {
       />
       <View style={styles.container}>
         <SearchBar value={searchQuery} onChangeText={handleTextChange} />
+
+        <View style={{marginHorizontal: 20}}>
+          <PolicyCard
+            imageUrl={require('../../Assets/acacia.png')}
+            policyName={' Acacia Comprehensive Vehicle Insurance'}
+            policyDescription=" This plan provides comprehensive coverage for a wide range of
+            medical expenses, including hospitalization, doctor consultations,
+            and prescription drugs."
+            onPress={() => navigation.navigate('InsuranceDetail')}
+          />
+        </View>
       </View>
     </>
   );

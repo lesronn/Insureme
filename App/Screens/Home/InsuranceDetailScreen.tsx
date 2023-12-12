@@ -105,7 +105,7 @@ const InsuranceDetailScreen = ({navigation}: any) => {
           title={'Sign Up for this Plan'}
           btnColor="primaryBtn"
           textColor="primaryBtnText"
-          onPress={() => navigation.navigate('PlanSignUp')}
+          onPress={() => navigation.navigate('LifeInsureanceSignUp')}
           // loading={loading}
         />
       </View>

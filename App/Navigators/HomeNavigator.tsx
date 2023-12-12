@@ -9,7 +9,10 @@ import LifeInsurance from '../Screens/Home/LifeInsurance';
 import GeneralInsurance from '../Screens/Home/GeneralInsurance';
 import VehicleInsuranceScreen from '../Screens/Home/VehicleInsuranceScreen';
 import InsuranceDetailScreen from '../Screens/Home/InsuranceDetailScreen';
-import PlanSignUp from '../Screens/Home/PlanSignUp';
+import LifeInsureanceSignUp from '../Screens/Home/LifeInsureanceSignUp';
+import GeneralInsuranceignup from '../Screens/Home/GeneralInsuranceignup';
+import HealthInsuranceSignup from '../Screens/Home/HealthInsuranceSignup';
+import VehicleInsuranceSignUp from '../Screens/Home/VehicleInsuranceSignUp';
 
 const HomeStack = createStackNavigator();
 
@@ -61,7 +64,6 @@ const HomeNavigator = () => {
           headerShown: false,
         }}
       />
-
       <HomeStack.Screen
         name="VehicleInsurance"
         component={VehicleInsuranceScreen}
@@ -76,10 +78,30 @@ const HomeNavigator = () => {
           headerShown: false,
         }}
       />
-
       <HomeStack.Screen
-        name="PlanSignUp"
-        component={PlanSignUp}
+        name="LifeInsureanceSignUp"
+        component={LifeInsureanceSignUp}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <HomeStack.Screen
+        name="GeneralInsuranceSignup"
+        component={GeneralInsuranceignup}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <HomeStack.Screen
+        name="HealthInsuranceSignup"
+        component={HealthInsuranceSignup}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <HomeStack.Screen
+        name="VehicleInsuranceSignUp"
+        component={VehicleInsuranceSignUp}
         options={{
           headerShown: false,
         }}

@@ -13,7 +13,12 @@ import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any 
 import AppText from './AppText';
 import colors from '../Config/colors';
 
-const DocumentPickerComponent = ({onDocumentPick, label, placeholder}) => {
+const DocumentPickerComponent = ({
+  onDocumentPick,
+  label,
+  placeholder,
+  color,
+}) => {
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [docError, SetDocErro] = useState(false);
 
@@ -51,10 +56,7 @@ const DocumentPickerComponent = ({onDocumentPick, label, placeholder}) => {
           style={[
             styles.textinput,
             {
-              borderColor:
-                docError && selectedDocument === null
-                  ? colors.danger
-                  : colors.formBorder,
+              borderColor: color,
             },
           ]}>
           <AppText
@@ -68,15 +70,6 @@ const DocumentPickerComponent = ({onDocumentPick, label, placeholder}) => {
             <Icon name="file" size={20} color={colors.formBorder} />
           </TouchableOpacity>
         </Pressable>
-
-        <View
-          style={{
-            height: 28,
-          }}>
-          {docError && selectedDocument === null ? (
-            <Text style={styles.errorText}>Document is required</Text>
-          ) : null}
-        </View>
       </View>
     </>
   );
