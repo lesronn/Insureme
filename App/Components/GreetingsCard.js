@@ -15,12 +15,20 @@ import FastImage from 'react-native-fast-image';
 import colors from '../Config/colors';
 import DateFunctions from '../Utils/DateFunctions';
 import {Edit, Magicpen} from 'iconsax-react-native';
+import ImageLoader from './ImageLoader';
 
 const GreetingsCard = ({username, profileImageUrl, onPress, profilePress}) => {
   return (
     <View style={[styles.lsiGreetingsCard, {backgroundColor: colors.white}]}>
       <Pressable onPress={profilePress}>
-        <FastImage source={profileImageUrl} style={styles.lsiProfileImg} />
+        <ImageLoader
+          containerStyle={styles.lsiProfileImg}
+          source={profileImageUrl}
+          style={styles.lsiProfileImg}
+          resizeMode="cover"
+        />
+
+        {/* <FastImage source={profileImageUrl} style={styles.lsiProfileImg} /> */}
       </Pressable>
       <View style={styles.lsiTextContainer}>
         <AppText
@@ -34,6 +42,7 @@ const GreetingsCard = ({username, profileImageUrl, onPress, profilePress}) => {
           fontSize={18}
           color="primaryText"
           fontFamily="Sora-Medium"
+          numberOfLines={1}
           style={styles.userName}>
           {username}
         </AppText>

@@ -32,7 +32,7 @@ const ImagePickerComponent = ({onImagePick, label, placeholder, color}) => {
   const pickImage = async () => {
     try {
       const image = await ImagePicker.openPicker({
-        width: 300,
+        width: 400,
         height: 400,
         cropping: true,
       });

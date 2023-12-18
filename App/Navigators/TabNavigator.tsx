@@ -140,6 +140,10 @@ const excludedRoutes = [
   'GeneralInsurance',
   'InsuranceDetail',
   'PlanSignUp',
+  'HealthInsuranceSignup',
+  'LifeInsureanceSignUp',
+  'VehicleInsuranceSignUp',
+  'GeneralInsuranceSignup',
 ];
 
 const getRoutName = (route: any) => {

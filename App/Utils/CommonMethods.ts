@@ -7,12 +7,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const handleClickedNotitfaction = (notification: any) => {
   // console.log('Notification CLicked ', notification.data);
-  let {id, createdAt, detail, images, category, body} = notification.data;
-  images = JSON.parse(images);
   // console.log(id, createdAt, detail, images, category, body);
-  navigation.navigate('NewsPreview', {
-    newsData: {heading: body, images, createdAt, detail, category, id},
-  });
+  navigation.navigate('Notification');
 };
 
 const subscribeToTopic = (topic: string) => {

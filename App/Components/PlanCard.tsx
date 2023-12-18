@@ -27,19 +27,21 @@ const PlanCard: React.FC<cardProps> = ({
       onPress={onPress}>
       <View
         style={{
-          backgroundColor: colors.primaryBg,
+          borderColor: colors.light,
+          borderWidth: 1,
+          backgroundColor: colors.white,
           borderRadius: 12,
           height: 90,
           width: 90,
         }}>
         <FastImage
           // containerStyle={{borderRadius: 12}}
-          // source={{
-          //   uri: imageUrl,
-          //   priority: FastImage.priority.high,
-          //   cache: FastImage.cacheControl.immutable,
-          // }}
-          source={imageUrl}
+          source={{
+            uri: imageUrl,
+            priority: FastImage.priority.high,
+            cache: FastImage.cacheControl.immutable,
+          }}
+          // source={imageUrl}
           style={styles.image}
           resizeMode="contain"
         />

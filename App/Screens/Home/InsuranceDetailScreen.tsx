@@ -6,12 +6,23 @@ import AppText from '../../Components/AppText';
 import FastImage from 'react-native-fast-image';
 import AppButton from '../../Components/AppButton';
 
-const InsuranceDetailScreen = ({navigation}: any) => {
+const InsuranceDetailScreen = ({navigation, route}: any) => {
+  const insuranceData = route.params;
+  const formRoute =
+    insuranceData.policyType === 'Health'
+      ? 'HealthInsuranceSignup'
+      : insuranceData.policyType === 'Life'
+      ? 'LifeInsureanceSignUp'
+      : insuranceData.policyType === 'Vehicle'
+      ? 'VehicleInsuranceSignUp'
+      : 'GeneralInsuranceSignup';
+  console.log(formRoute);
+
   return (
     <>
       <SubHeader
         middleText={true}
-        title="Insurance Detail"
+        title={insuranceData?.name ?? 'Insurance Detail'}
         onPress={() => navigation.goBack()}
       />
       <ScrollView style={styles.container}>
@@ -20,7 +31,7 @@ const InsuranceDetailScreen = ({navigation}: any) => {
           fontSize={20}
           color="primaryBtn"
           style={{paddingVertical: 10, textAlign: 'center'}}>
-          Acacia Life Insurance
+          {insuranceData.name}
         </AppText>
         <View
           style={{
@@ -29,12 +40,12 @@ const InsuranceDetailScreen = ({navigation}: any) => {
             alignItems: 'center',
           }}>
           <FastImage
-            source={require('../../Assets/acacia.png')}
+            source={{uri: insuranceData?.imageUrls[0]}}
             style={{height: 100, width: 135}}
             resizeMode="contain"
           />
           <FastImage
-            source={require('../../Assets/acaciastars.png')}
+            source={{uri: insuranceData?.imageUrls[1]}}
             style={{height: 70, width: 100}}
             resizeMode="contain"
           />
@@ -43,43 +54,36 @@ const InsuranceDetailScreen = ({navigation}: any) => {
         <AppText
           fontFamily="Sora-Medium"
           style={{paddingTop: 10, paddingBottom: 20}}>
-          Acacia Life Insurance provides financial protection for your family in
-          case of your untimely death.
+          {insuranceData?.description}
         </AppText>
-
         <AppText fontFamily="Sora-Bold">Benefits</AppText>
         <AppText
           fontFamily="Sora-Medium"
           style={{paddingTop: 10, paddingBottom: 20}}>
-          Peace of mind knowing your family is cared for, financial security for
-          your loved ones, tax-free benefits
+          {insuranceData?.benefits}
         </AppText>
-
         <AppText fontFamily="Sora-Bold">Features</AppText>
-        <AppText fontFamily="Sora-Medium" style={{paddingTop: 10}}>
-          • {'  '}Life insurance coverage
-        </AppText>
-        <AppText fontFamily="Sora-Medium" style={{paddingTop: 10}}>
-          • {'  '}Lump sum payment to beneficiaries
-        </AppText>
-
-        <AppText fontFamily="Sora-Medium" style={{paddingTop: 10}}>
-          • {'  '}Flexible coverage options
-        </AppText>
-
+        {insuranceData?.features.map((feature: any, index: any) => (
+          <AppText
+            key={index}
+            fontFamily="Sora-Medium"
+            style={{paddingTop: 10}}>
+            • {'  '}
+            {feature}
+          </AppText>
+        ))}
         <AppText fontFamily="Sora-Bold" style={{paddingTop: 20}}>
           Requirements
         </AppText>
-        <AppText fontFamily="Sora-Medium" style={{paddingTop: 10}}>
-          • {'  '}Valid ID
-        </AppText>
-        <AppText fontFamily="Sora-Medium" style={{paddingTop: 10}}>
-          • {'  '}Proof of income
-        </AppText>
-
-        <AppText fontFamily="Sora-Medium" style={{paddingTop: 10}}>
-          • {'  '}Medical examination
-        </AppText>
+        {insuranceData?.requirements.map((requirement: any, index: any) => (
+          <AppText
+            key={index}
+            fontFamily="Sora-Medium"
+            style={{paddingTop: 10}}>
+            • {'  '}
+            {requirement}
+          </AppText>
+        ))}
 
         <AppText fontFamily="Sora-Bold" style={{paddingTop: 20}}>
           Estimated Price
@@ -87,7 +91,7 @@ const InsuranceDetailScreen = ({navigation}: any) => {
         <AppText
           fontFamily="Sora-Medium"
           style={{paddingTop: 10, paddingBottom: 30}}>
-          GH₵ 1000 (Annually)
+          {insuranceData.amount}
         </AppText>
       </ScrollView>
       <View
@@ -105,7 +109,7 @@ const InsuranceDetailScreen = ({navigation}: any) => {
           title={'Sign Up for this Plan'}
           btnColor="primaryBtn"
           textColor="primaryBtnText"
-          onPress={() => navigation.navigate('LifeInsureanceSignUp')}
+          onPress={() => navigation.navigate(formRoute, insuranceData)}
           // loading={loading}
         />
       </View>

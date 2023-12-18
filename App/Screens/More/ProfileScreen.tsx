@@ -122,7 +122,7 @@ const ProfileScreen = ({navigation}: any) => {
                 phone: values.phone,
                 gender: values.gender,
                 dob: values.dob,
-                profileImg: values.profilePicture || null,
+                profilePicture: values.profilePicture || null,
                 // Add other fields as needed
               });
             // Stop the loading state

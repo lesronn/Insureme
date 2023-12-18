@@ -28,6 +28,7 @@ import {useToast} from 'react-native-toast-notifications';
 import {AuthContext} from '../../Config/AuthContext';
 import AuthStorage from '../../Utils/AuthStorage';
 import Screen from '../../Components/Screen';
+import CommonMethods from '../../Utils/CommonMethods';
 type signUpProps = {
   navigation?: any;
 };
@@ -128,7 +129,7 @@ const SignUpScreen: React.FC<signUpProps> = ({navigation}) => {
               phone: values.phone,
               gender: values.gender,
               dob: values.dob,
-              profileImg: values.profilePicture || null,
+              profilePicture: values.profilePicture || null,
               // Add other fields as needed
             });
           // Stop the loading state
@@ -136,6 +137,7 @@ const SignUpScreen: React.FC<signUpProps> = ({navigation}) => {
           delete user.password;
           setUser(user);
           AuthStorage.storeUserData(user);
+          CommonMethods.subscribeToTopic(`user-${user?.uid}`);
           setLoading(false);
           console.log(
             'User signed up and additional data posted to Firestore:',

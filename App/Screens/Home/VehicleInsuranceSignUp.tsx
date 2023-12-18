@@ -1,5 +1,5 @@
 import {Keyboard, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import SubHeader from '../../Components/SubHeader';
 import colors from '../../Config/colors';
 import DocumentPickerComponent from '../../Components/DocumentPicker';
@@ -16,13 +16,19 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import AppTextInput from '../../Components/AppTextInput';
 import AppButton from '../../Components/AppButton';
 import ImagePickerComponent from '../../Components/ImagePickerComponent';
-const VehicleInsuranceSignUp = ({navigation}: any) => {
+import SuccessModal from '../../Components/SuccessModal';
+
+import RNFS from 'react-native-fs';
+
+const VehicleInsuranceSignUp = ({navigation, route}: any) => {
+  const insuranceDetails = route.params;
+  const {user} = useContext(AuthContext);
   const [loading, setLoading] = useState<boolean>(false);
 
   const [selectedDate, setSelectedDate] = useState(null);
 
   const [keyboardVisible, setKeyboardVisible] = useState(false);
-
+  const [successModalVisible, setSuccessModalVisible] = useState(false);
   const toast = useToast();
   const currentDate = new Date();
   // Subtract 4 years from the current date
@@ -81,15 +87,137 @@ const VehicleInsuranceSignUp = ({navigation}: any) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values: any) => {
+      console.log(values);
+
       try {
-        console.log(values);
+        toast.show('This may take a while ', {
+          type: 'normal',
+          placement: 'top',
+          duration: 2000,
+          animationType: 'slide-in',
+        });
+        setLoading(true);
+
+        const hasUserSubscribed = await checkUserSubscription(
+          user?.uid,
+          insuranceDetails.id,
+        );
+        // Check if the user has already subscribed
+
+        if (!hasUserSubscribed) {
+          const licenseImageRef = storage().ref(
+            `VehicleImages/${
+              user.uid +
+              insuranceDetails.id +
+              new Date().toISOString() +
+              'license'
+            }`,
+          );
+          await licenseImageRef.putFile(values.license);
+          const licenseDownloadURL = await licenseImageRef.getDownloadURL();
+
+          const vehicleImageRef = storage().ref(
+            `VehicleImages/${
+              user.uid + insuranceDetails.id + new Date().toISOString()
+            }`,
+          );
+          await vehicleImageRef.putFile(values.vehicleImage);
+          const vehicleImageDownloadURL =
+            await vehicleImageRef.getDownloadURL();
+
+          // If the user hasn't subscribed, proceed with signup
+          const userPolicyRef = firestore().collection('userPolicies').doc();
+          await userPolicyRef.set({
+            user: {
+              ...user,
+            },
+            policy: {
+              ...insuranceDetails,
+            },
+            status: 'inProgress',
+            signedUpAt: new Date().toISOString(),
+            ExtraData: {
+              policyType: values.policyType,
+              primaryDriver: values.primaryDriver,
+              license: licenseDownloadURL,
+              vehicleUsage: values.vehicleUsage,
+              vehiclePrice: values.vehiclePrice,
+              vehicleImage: vehicleImageDownloadURL,
+            },
+          });
+          setLoading(false);
+          setSuccessModalVisible(true);
+          console.log('User signed up successfully!');
+        } else {
+          setLoading(false);
+          toast.show('You have already subscribed to this policy', {
+            type: 'normal',
+            placement: 'top',
+            duration: 2000,
+            animationType: 'slide-in',
+          });
+          console.log('You have already subscribed to this policy');
+        }
       } catch (error: any) {
-        // Stop the loading state on error
+        setLoading(false);
+        console.log('Error during signup:', error);
+        toast.show('Error during signup', {
+          type: 'normal',
+          placement: 'top',
+          duration: 2000,
+          animationType: 'slide-in',
+        });
       }
     },
   });
+
+  const uploadDocumentToStorage = async (uri: string) => {
+    try {
+      // Read file content using react-native-fs
+      const content = await RNFS.readFile(uri, 'base64');
+      const blob = new Blob([content], {type: 'application/pdf'});
+
+      // Upload blob to Firebase Storage
+      const storageRef = storage().ref();
+      const fileRef = storageRef.child(
+        `documents/${
+          user.uid + insuranceDetails.id + new Date().toISOString()
+        }`,
+      );
+
+      await fileRef.put(blob);
+
+      // Get download URL
+      const downloadURL = await fileRef.getDownloadURL();
+      return downloadURL;
+    } catch (error) {
+      console.error('Error uploading document to storage:', error);
+      throw error;
+    }
+  };
+
+  const checkUserSubscription = async (userId: any, policyId: any) => {
+    const userPolicyRef = firestore().collection('userPolicies');
+    const querySnapshot = await userPolicyRef
+      .where(`user.uid`, '==', userId)
+      .where(`policy.id`, '==', policyId)
+      .limit(1)
+      .get();
+
+    return !querySnapshot.empty;
+  };
+
+  const handleSuccessModalClose = () => {
+    setSuccessModalVisible(false);
+    // Navigate to the root of the app
+    navigation.navigate('Home');
+  };
   return (
     <>
+      <SuccessModal
+        isVisible={successModalVisible}
+        onClose={handleSuccessModalClose}
+      />
       <SubHeader
         middleText={true}
         title="Vehicle Insrance Plan  SignUp"

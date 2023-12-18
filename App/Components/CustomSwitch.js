@@ -57,7 +57,8 @@ const CustomSwitch = ({
 
 const styles = StyleSheet.create({
   tabContainer: {
-    marginTop: 20,
+    marginVertical: 20,
+    marginHorizontal: 20,
   },
   tabBar: {
     borderWidth: 1,

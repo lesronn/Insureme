@@ -56,7 +56,7 @@ const HomeScreen = ({navigation}: homeProps) => {
       </View>
       <View style={styles.container}>
         <GreetingsCard
-          username={'Gideon'}
+          username={user.name}
           profilePress={() => navigation.navigate('Profile')}
           profileImageUrl={{uri: user.profilePicture}}
           onPress={() => {

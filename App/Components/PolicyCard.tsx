@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     height: 'auto',
     borderRadius: 10,
     paddingHorizontal: 15,
+    marginBottom: 20,
   },
   image: {
     height: 100,

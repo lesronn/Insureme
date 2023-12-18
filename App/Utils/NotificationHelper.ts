@@ -7,6 +7,9 @@ import notifee, {
   AndroidVisibility,
 } from '@notifee/react-native';
 import CommonMethods from './CommonMethods';
+import {useContext, useEffect, useState} from 'react';
+import {AuthContext} from '../Config/AuthContext';
+import AuthStorage from './AuthStorage';
 
 const NotificationHelper = () => {
   async function requestUserPermission() {
@@ -33,7 +36,6 @@ const NotificationHelper = () => {
         if (fcmToken) {
           console.log(fcmToken, 'NEW FCMToken');
           AsyncStorage.setItem('fcmtoken', fcmToken);
-          CommonMethods.subscribeToTopic('insuremeSub');
         }
       } catch (error) {
         console.log(error, 'FcmToken Error');
@@ -82,7 +84,6 @@ export const onNotifeeMessageReceived = async (message: any) => {
     data: message?.data,
     title: `${message.data.title}`,
     body: `${message.data.body}`,
-    photoUrl: message?.data?.image,
   };
   // console.log('Photo Url', JSON.parse(message.data.images));
 
@@ -99,6 +100,7 @@ export const NotificationDisplay = async (message: any) => {
     const notificationWithOpened = {
       ...message,
       opened: false,
+      date: new Date().toISOString(),
     };
 
     // Append the new notification to the existing ones

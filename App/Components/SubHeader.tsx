@@ -68,6 +68,7 @@ const SubHeader = ({
           fontSize={18}
           fontFamily="Sora-Medium"
           color="primaryText"
+          numberOfLines={1}
           style={styles.headerText}>
           {title}
         </AppText>

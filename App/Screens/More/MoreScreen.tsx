@@ -32,9 +32,12 @@ import CommonMethods from '../../Utils/CommonMethods';
 import VersionCheck from 'react-native-version-check';
 import FastImage from 'react-native-fast-image';
 import {AuthContext} from '../../Config/AuthContext';
+import AuthStorage from '../../Utils/AuthStorage';
 
 const MoreScreen = ({navigation}: any) => {
   const [imageModalVisible, setimageModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const [downloadMessage, setDownloadMesage] = useState('');
   const {setUser, user} = useContext(AuthContext);
 
@@ -87,7 +90,14 @@ const MoreScreen = ({navigation}: any) => {
   useEffect(() => {
     ReceiveNotifications();
   }, []);
-
+  const handleLogout = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setUser(null);
+      AuthStorage.removeUserData();
+      setLoading(false);
+    }, 1000);
+  };
   return (
     <>
       <View style={styles.header}>
@@ -226,23 +236,30 @@ const MoreScreen = ({navigation}: any) => {
 
         {/* SAVED NEWS CARD */}
         <TouchableOpacity
+          onPress={handleLogout}
           style={[
-            styles.card,
             {
               backgroundColor: colors.primaryBtn,
               marginTop: 100,
               justifyContent: 'center',
+              alignItems: 'center',
+              height: 55,
+              flexDirection: 'row',
+              borderRadius: 12,
+              marginBottom: 10,
             },
-          ]}
-          // onPress={() => navigation.navigate('Saved')}
-        >
-          <AppText
-            fontFamily="Sora-Medium"
-            fontSize={18}
-            color="white"
-            style={{paddingLeft: 12}}>
-            Log Out
-          </AppText>
+          ]}>
+          {loading ? (
+            <ActivityIndicator size={'large'} color={colors.white} />
+          ) : (
+            <AppText
+              fontFamily="Sora-Bold"
+              fontSize={18}
+              color="white"
+              style={{paddingLeft: 12}}>
+              Log Out
+            </AppText>
+          )}
         </TouchableOpacity>
         {/* END OF SAVED NEWS CARD */}
       </ScrollView>

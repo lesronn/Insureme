@@ -3,9 +3,9 @@ import React, {useContext} from 'react';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import colors from '../Config/colors';
 
-const CardSkeleton = () => {
+const PolicyCardSkeleton = () => {
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, paddingTop: 20}}>
       <View style={[styles.card, {backgroundColor: colors.white}]}>
         <SkeletonPlaceholder>
           <View style={styles.placeholderContainer}>
@@ -17,93 +17,15 @@ const CardSkeleton = () => {
                 width: '80%',
               }}>
               <View style={{width: '90%', height: 15}} />
-              <View style={{width: '90%', height: 15, marginTop: 15}} />
-              <View style={{width: '50%', height: 15, marginTop: 15}} />
-            </View>
-          </View>
-        </SkeletonPlaceholder>
-      </View>
-      <View style={[styles.card, {backgroundColor: colors.white}]}>
-        <SkeletonPlaceholder>
-          <View style={styles.placeholderContainer}>
-            <View style={{width: 90, height: 90, borderRadius: 10}} />
-            <View
-              style={{
-                marginLeft: 15,
-                justifyContent: 'center',
-                width: '80%',
-              }}>
-              <View style={{width: '90%', height: 15}} />
-              <View style={{width: '90%', height: 15, marginTop: 15}} />
-              <View style={{width: '50%', height: 15, marginTop: 15}} />
-            </View>
-          </View>
-        </SkeletonPlaceholder>
-      </View>
-      <View style={[styles.card, {backgroundColor: colors.white}]}>
-        <SkeletonPlaceholder>
-          <View style={styles.placeholderContainer}>
-            <View style={{width: 90, height: 90, borderRadius: 10}} />
-            <View
-              style={{
-                marginLeft: 15,
-                justifyContent: 'center',
-                width: '80%',
-              }}>
-              <View style={{width: '90%', height: 15}} />
-              <View style={{width: '90%', height: 15, marginTop: 15}} />
-              <View style={{width: '50%', height: 15, marginTop: 15}} />
-            </View>
-          </View>
-        </SkeletonPlaceholder>
-      </View>
-      <View style={[styles.card, {backgroundColor: colors.white}]}>
-        <SkeletonPlaceholder>
-          <View style={styles.placeholderContainer}>
-            <View style={{width: 90, height: 90, borderRadius: 10}} />
-            <View
-              style={{
-                marginLeft: 15,
-                justifyContent: 'center',
-                width: '80%',
-              }}>
-              <View style={{width: '90%', height: 15}} />
-              <View style={{width: '90%', height: 15, marginTop: 15}} />
-              <View style={{width: '50%', height: 15, marginTop: 15}} />
-            </View>
-          </View>
-        </SkeletonPlaceholder>
-      </View>
-      <View style={[styles.card, {backgroundColor: colors.white}]}>
-        <SkeletonPlaceholder>
-          <View style={styles.placeholderContainer}>
-            <View style={{width: 90, height: 90, borderRadius: 10}} />
-            <View
-              style={{
-                marginLeft: 15,
-                justifyContent: 'center',
-                width: '80%',
-              }}>
-              <View style={{width: '90%', height: 15}} />
-              <View style={{width: '90%', height: 15, marginTop: 15}} />
-              <View style={{width: '50%', height: 15, marginTop: 15}} />
-            </View>
-          </View>
-        </SkeletonPlaceholder>
-      </View>
-      <View style={[styles.card, {backgroundColor: colors.white}]}>
-        <SkeletonPlaceholder>
-          <View style={styles.placeholderContainer}>
-            <View style={{width: 90, height: 90, borderRadius: 10}} />
-            <View
-              style={{
-                marginLeft: 15,
-                justifyContent: 'center',
-                width: '80%',
-              }}>
-              <View style={{width: '90%', height: 15}} />
-              <View style={{width: '90%', height: 15, marginTop: 15}} />
-              <View style={{width: '50%', height: 15, marginTop: 15}} />
+              <View style={{width: '90%', height: 40, marginTop: 15}} />
+              <View
+                style={{
+                  width: '40%',
+                  height: 30,
+                  marginTop: 15,
+                  alignSelf: 'flex-end',
+                }}
+              />
             </View>
           </View>
         </SkeletonPlaceholder>
@@ -120,8 +42,115 @@ const CardSkeleton = () => {
                 width: '80%',
               }}>
               <View style={{width: '90%', height: 15}} />
-              <View style={{width: '90%', height: 15, marginTop: 15}} />
-              <View style={{width: '50%', height: 15, marginTop: 15}} />
+              <View style={{width: '90%', height: 40, marginTop: 15}} />
+              <View
+                style={{
+                  width: '40%',
+                  height: 30,
+                  marginTop: 15,
+                  alignSelf: 'flex-end',
+                }}
+              />
+            </View>
+          </View>
+        </SkeletonPlaceholder>
+      </View>
+
+      <View style={[styles.card, {backgroundColor: colors.white}]}>
+        <SkeletonPlaceholder>
+          <View style={styles.placeholderContainer}>
+            <View style={{width: 90, height: 90, borderRadius: 10}} />
+            <View
+              style={{
+                marginLeft: 15,
+                justifyContent: 'center',
+                width: '80%',
+              }}>
+              <View style={{width: '90%', height: 15}} />
+              <View style={{width: '90%', height: 40, marginTop: 15}} />
+              <View
+                style={{
+                  width: '40%',
+                  height: 30,
+                  marginTop: 15,
+                  alignSelf: 'flex-end',
+                }}
+              />
+            </View>
+          </View>
+        </SkeletonPlaceholder>
+      </View>
+
+      <View style={[styles.card, {backgroundColor: colors.white}]}>
+        <SkeletonPlaceholder>
+          <View style={styles.placeholderContainer}>
+            <View style={{width: 90, height: 90, borderRadius: 10}} />
+            <View
+              style={{
+                marginLeft: 15,
+                justifyContent: 'center',
+                width: '80%',
+              }}>
+              <View style={{width: '90%', height: 15}} />
+              <View style={{width: '90%', height: 40, marginTop: 15}} />
+              <View
+                style={{
+                  width: '40%',
+                  height: 30,
+                  marginTop: 15,
+                  alignSelf: 'flex-end',
+                }}
+              />
+            </View>
+          </View>
+        </SkeletonPlaceholder>
+      </View>
+
+      <View style={[styles.card, {backgroundColor: colors.white}]}>
+        <SkeletonPlaceholder>
+          <View style={styles.placeholderContainer}>
+            <View style={{width: 90, height: 90, borderRadius: 10}} />
+            <View
+              style={{
+                marginLeft: 15,
+                justifyContent: 'center',
+                width: '80%',
+              }}>
+              <View style={{width: '90%', height: 15}} />
+              <View style={{width: '90%', height: 40, marginTop: 15}} />
+              <View
+                style={{
+                  width: '40%',
+                  height: 30,
+                  marginTop: 15,
+                  alignSelf: 'flex-end',
+                }}
+              />
+            </View>
+          </View>
+        </SkeletonPlaceholder>
+      </View>
+
+      <View style={[styles.card, {backgroundColor: colors.white}]}>
+        <SkeletonPlaceholder>
+          <View style={styles.placeholderContainer}>
+            <View style={{width: 90, height: 90, borderRadius: 10}} />
+            <View
+              style={{
+                marginLeft: 15,
+                justifyContent: 'center',
+                width: '80%',
+              }}>
+              <View style={{width: '90%', height: 15}} />
+              <View style={{width: '90%', height: 40, marginTop: 15}} />
+              <View
+                style={{
+                  width: '40%',
+                  height: 30,
+                  marginTop: 15,
+                  alignSelf: 'flex-end',
+                }}
+              />
             </View>
           </View>
         </SkeletonPlaceholder>
@@ -130,7 +159,7 @@ const CardSkeleton = () => {
   );
 };
 
-export default CardSkeleton;
+export default PolicyCardSkeleton;
 
 const styles = StyleSheet.create({
   card: {

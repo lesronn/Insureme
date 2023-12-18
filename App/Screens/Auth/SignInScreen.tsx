@@ -15,6 +15,7 @@ import {useToast} from 'react-native-toast-notifications';
 import {AuthContext} from '../../Config/AuthContext';
 import AuthStorage from '../../Utils/AuthStorage';
 import Screen from '../../Components/Screen';
+import CommonMethods from '../../Utils/CommonMethods';
 interface SigninProps {
   navigation?: any;
 }
@@ -57,6 +58,7 @@ const SignInScreen: React.FC<SigninProps> = ({navigation}) => {
           // Store user data and UID in local storage
           setUser(user);
           AuthStorage.storeUserData(user);
+          CommonMethods.subscribeToTopic(`user-${user?.uid}`);
           console.log('User logged in and data stored locally:', user);
         } else {
           setLoading(false);
@@ -74,7 +76,13 @@ const SignInScreen: React.FC<SigninProps> = ({navigation}) => {
         setLoading(false);
       } catch (error: any) {
         setLoading(false);
-        if (error.code === 'auth/user-not-found') {
+        if (
+          error.code === 'auth/user-not-found' ||
+          error.code === 'auth/invalid-credential'
+        ) {
+          formik.setFieldError('email', 'Invalid email address');
+          formik.setFieldError('password', 'Invalid password');
+
           toast.show('Invalid Username or Password.', {
             type: 'custom',
             placement: 'bottom',

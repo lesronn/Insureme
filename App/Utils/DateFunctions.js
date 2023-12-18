@@ -1,61 +1,21 @@
-function formatDate(datetimeString) {
-  const datetime = new Date(datetimeString);
-  const now = new Date();
+const formatDate = dateString => {
+  const date = new Date(dateString);
 
-  // Check if the date is today
-  if (datetime.toDateString() === now.toDateString()) {
-    const timeString = datetime.toLocaleTimeString([], {
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true,
-      timeZone: 'GMT',
-    });
-    return `Today at ${timeString}`;
-  }
+  // Format date in "MM|DD|YY" format
+  const formattedDate = date.toLocaleDateString('en-US', {
+    year: '2-digit',
+    month: '2-digit',
+    day: '2-digit',
+  });
 
-  // Check if the date is yesterday
-  const yesterday = new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate() - 1,
-  );
-  if (datetime.toDateString() === yesterday.toDateString()) {
-    const timeString = datetime.toLocaleTimeString([], {
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true,
-      timeZone: 'GMT',
-    });
-    return `Yesterday at ${timeString}`;
-  }
-
-  // Format the date as weekday, date, and time
-  const options = {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
+  // Format time in "h:mm a" format
+  const formattedTime = date.toLocaleTimeString('en-US', {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,
-    timeZone: 'GMT',
-  };
-  return datetime.toLocaleString('en-US', options);
-}
+  });
 
-const givingDateFormat = dateString => {
-  const options = {
-    weekday: 'short',
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  };
-  const formattedDate = new Date(dateString).toLocaleDateString(
-    'en-US',
-    options,
-  );
-  const formattedDateWithoutCommas = formattedDate.replace(/,/g, '');
-  return formattedDateWithoutCommas;
+  return `${formattedDate} at ${formattedTime}`;
 };
 
 /* Preview greeting in relation with current time */
@@ -104,7 +64,7 @@ function formatTime(dateString) {
 export default {
   formatDate,
   getGreeting,
-  givingDateFormat,
+
   simplifyDate,
   formatTime,
 };
