@@ -69,47 +69,51 @@ const LifeInsureanceSignUp = ({navigation, route}: any) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values: any) => {
-      try {
-        setLoading(true);
-        // Check if the user has already subscribed
-        const hasUserSubscribed = await checkUserSubscription(
-          user?.uid,
-          insuranceDetails.id,
-        );
+      if (insuranceDetails === null || insuranceDetails === undefined) {
+        navigation.navigate('LifeInsurance');
+      } else {
+        try {
+          setLoading(true);
+          // Check if the user has already subscribed
+          const hasUserSubscribed = await checkUserSubscription(
+            user?.uid,
+            insuranceDetails.id,
+          );
 
-        if (!hasUserSubscribed) {
-          // If the user hasn't subscribed, proceed with signup
-          const userPolicyRef = firestore().collection('userPolicies').doc();
-          await userPolicyRef.set({
-            user: {
-              ...user,
-            },
-            policy: {
-              ...insuranceDetails,
-            },
-            status: 'inProgress',
-            signedUpAt: new Date().toISOString(),
-            ExtraData: {
-              ...values,
-            },
-          });
-          setLoading(false);
-          setSuccessModalVisible(true);
-          console.log('User signed up successfully!');
-        } else {
-          setLoading(false);
+          if (!hasUserSubscribed) {
+            // If the user hasn't subscribed, proceed with signup
+            const userPolicyRef = firestore().collection('userPolicies').doc();
+            await userPolicyRef.set({
+              user: {
+                ...user,
+              },
+              policy: {
+                ...insuranceDetails,
+              },
+              status: 'inProgress',
+              signedUpAt: new Date().toISOString(),
+              ExtraData: {
+                ...values,
+              },
+            });
+            setLoading(false);
+            setSuccessModalVisible(true);
+            console.log('User signed up successfully!');
+          } else {
+            setLoading(false);
 
-          toast.show('You have already subscribed to this policy', {
-            type: 'danger',
-            placement: 'top',
-            duration: 2000,
-            animationType: 'slide-in',
-          });
-          console.log('You have already subscribed to this policy');
+            toast.show('You have already subscribed to this policy', {
+              type: 'danger',
+              placement: 'top',
+              duration: 2000,
+              animationType: 'slide-in',
+            });
+            console.log('You have already subscribed to this policy');
+          }
+        } catch (error: any) {
+          setLoading(false);
+          console.error('Error during signup:', error);
         }
-      } catch (error: any) {
-        setLoading(false);
-        console.error('Error during signup:', error);
       }
     },
   });
@@ -137,7 +141,7 @@ const LifeInsureanceSignUp = ({navigation, route}: any) => {
       />
       <SubHeader
         middleText={true}
-        title="Life Insurance Plan  SignUp"
+        title={insuranceDetails ? 'Life Insurance Plan  SignUp' : 'Details'}
         onPress={() => navigation.goBack()}
       />
       <View style={styles.container}>

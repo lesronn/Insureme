@@ -88,85 +88,88 @@ const VehicleInsuranceSignUp = ({navigation, route}: any) => {
     validationSchema: validationSchema,
     onSubmit: async (values: any) => {
       console.log(values);
-
-      try {
-        toast.show('This may take a while ', {
-          type: 'normal',
-          placement: 'top',
-          duration: 2000,
-          animationType: 'slide-in',
-        });
-        setLoading(true);
-
-        const hasUserSubscribed = await checkUserSubscription(
-          user?.uid,
-          insuranceDetails.id,
-        );
-        // Check if the user has already subscribed
-
-        if (!hasUserSubscribed) {
-          const licenseImageRef = storage().ref(
-            `VehicleImages/${
-              user.uid +
-              insuranceDetails.id +
-              new Date().toISOString() +
-              'license'
-            }`,
-          );
-          await licenseImageRef.putFile(values.license);
-          const licenseDownloadURL = await licenseImageRef.getDownloadURL();
-
-          const vehicleImageRef = storage().ref(
-            `VehicleImages/${
-              user.uid + insuranceDetails.id + new Date().toISOString()
-            }`,
-          );
-          await vehicleImageRef.putFile(values.vehicleImage);
-          const vehicleImageDownloadURL =
-            await vehicleImageRef.getDownloadURL();
-
-          // If the user hasn't subscribed, proceed with signup
-          const userPolicyRef = firestore().collection('userPolicies').doc();
-          await userPolicyRef.set({
-            user: {
-              ...user,
-            },
-            policy: {
-              ...insuranceDetails,
-            },
-            status: 'inProgress',
-            signedUpAt: new Date().toISOString(),
-            ExtraData: {
-              policyType: values.policyType,
-              primaryDriver: values.primaryDriver,
-              license: licenseDownloadURL,
-              vehicleUsage: values.vehicleUsage,
-              vehiclePrice: values.vehiclePrice,
-              vehicleImage: vehicleImageDownloadURL,
-            },
-          });
-          setLoading(false);
-          setSuccessModalVisible(true);
-          console.log('User signed up successfully!');
-        } else {
-          setLoading(false);
-          toast.show('You have already subscribed to this policy', {
+      if (insuranceDetails === undefined || insuranceDetails === null) {
+        navigation.navigate('VehicleInsurance');
+      } else {
+        try {
+          toast.show('This may take a while ', {
             type: 'normal',
             placement: 'top',
             duration: 2000,
             animationType: 'slide-in',
           });
-          console.log('You have already subscribed to this policy');
+          setLoading(true);
+
+          const hasUserSubscribed = await checkUserSubscription(
+            user?.uid,
+            insuranceDetails.id,
+          );
+          // Check if the user has already subscribed
+
+          if (!hasUserSubscribed) {
+            const licenseImageRef = storage().ref(
+              `VehicleImages/${
+                user.uid +
+                insuranceDetails.id +
+                new Date().toISOString() +
+                'license'
+              }`,
+            );
+            await licenseImageRef.putFile(values.license);
+            const licenseDownloadURL = await licenseImageRef.getDownloadURL();
+
+            const vehicleImageRef = storage().ref(
+              `VehicleImages/${
+                user.uid + insuranceDetails.id + new Date().toISOString()
+              }`,
+            );
+            await vehicleImageRef.putFile(values.vehicleImage);
+            const vehicleImageDownloadURL =
+              await vehicleImageRef.getDownloadURL();
+
+            // If the user hasn't subscribed, proceed with signup
+            const userPolicyRef = firestore().collection('userPolicies').doc();
+            await userPolicyRef.set({
+              user: {
+                ...user,
+              },
+              policy: {
+                ...insuranceDetails,
+              },
+              status: 'inProgress',
+              signedUpAt: new Date().toISOString(),
+              ExtraData: {
+                policyType: values.policyType,
+                primaryDriver: values.primaryDriver,
+                license: licenseDownloadURL,
+                vehicleUsage: values.vehicleUsage,
+                vehiclePrice: values.vehiclePrice,
+                vehicleImage: vehicleImageDownloadURL,
+              },
+            });
+            setLoading(false);
+            setSuccessModalVisible(true);
+            console.log('User signed up successfully!');
+          } else {
+            setLoading(false);
+            toast.show('You have already subscribed to this policy', {
+              type: 'normal',
+              placement: 'top',
+              duration: 2000,
+              animationType: 'slide-in',
+            });
+            console.log('You have already subscribed to this policy');
+          }
+        } catch (error: any) {
+          setLoading(false);
+          console.log('Error during signup:', error);
+          toast.show('Error during signup', {
+            type: 'normal',
+            placement: 'top',
+            duration: 2000,
+            animationType: 'slide-in',
+          });
         }
-      } catch (error: any) {
-        setLoading(false);
-        console.log('Error during signup:', error);
-        toast.show('Error during signup', {
-          type: 'normal',
-          placement: 'top',
-          duration: 2000,
-          animationType: 'slide-in',
-        });
       }
     },
   });
@@ -220,7 +223,7 @@ const VehicleInsuranceSignUp = ({navigation, route}: any) => {
       />
       <SubHeader
         middleText={true}
-        title="Vehicle Insrance Plan  SignUp"
+        title={insuranceDetails ? 'Vehicle Insrance Plan  SignUp' : 'Details'}
         onPress={() => navigation.goBack()}
       />
       <View style={styles.container}>

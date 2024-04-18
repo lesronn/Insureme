@@ -73,12 +73,12 @@ const HomeScreen = ({navigation}: homeProps) => {
           <Card
             title="Life Insurance"
             source={require('../../Assets/life.png')}
-            onPress={() => navigation.navigate('LifeInsurance')}
+            onPress={() => navigation.navigate('LifeInsureanceSignUp')}
           />
           <Card
             title="Vehicle Insurance"
             source={require('../../Assets/car.png')}
-            onPress={() => navigation.navigate('VehicleInsurance')}
+            onPress={() => navigation.navigate('VehicleInsuranceSignUp')}
           />
         </View>
 
@@ -92,13 +92,13 @@ const HomeScreen = ({navigation}: homeProps) => {
           <Card
             title="Health Insurance"
             source={require('../../Assets/health.png')}
-            onPress={() => navigation.navigate('HealthInsurance')}
+            onPress={() => navigation.navigate('HealthInsuranceSignup')}
           />
 
           <Card
             title="General Insurance"
             source={require('../../Assets/insurance.png')}
-            onPress={() => navigation.navigate('GeneralInsurance')}
+            onPress={() => navigation.navigate('GeneralInsuranceSignup')}
           />
         </View>
         <View style={{position: 'absolute', bottom: 10, width: '100%'}}>

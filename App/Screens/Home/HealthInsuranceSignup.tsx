@@ -70,71 +70,75 @@ const HealthInsuranceSignup = ({navigation, route}: any) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values: any) => {
-      try {
-        toast.show('This may take a while ', {
-          type: 'normal',
-          placement: 'top',
-          duration: 2000,
-          animationType: 'slide-in',
-        });
-        setLoading(true);
-
-        const hasUserSubscribed = await checkUserSubscription(
-          user?.uid,
-          insuranceDetails.id,
-        );
-        // Check if the user has already subscribed
-
-        if (!hasUserSubscribed) {
-          const imageRef = storage().ref(
-            `HealthImages/${
-              user.uid + insuranceDetails.id + new Date().toISOString()
-            }`,
-          );
-          await imageRef.putFile(values.validId);
-          const validIdDownloadURL = await imageRef.getDownloadURL();
-          const medicalhistoryDownloadURL = await uploadDocumentToStorage(
-            values.medicalhistory,
-          );
-          // If the user hasn't subscribed, proceed with signup
-          const userPolicyRef = firestore().collection('userPolicies').doc();
-          await userPolicyRef.set({
-            user: {
-              ...user,
-            },
-            policy: {
-              ...insuranceDetails,
-            },
-            status: 'inProgress',
-            signedUpAt: new Date().toISOString(),
-            ExtraData: {
-              address: values.address,
-              validId: validIdDownloadURL,
-              medicalhistory: medicalhistoryDownloadURL,
-            },
-          });
-          setLoading(false);
-          setSuccessModalVisible(true);
-          console.log('User signed up successfully!');
-        } else {
-          setLoading(false);
-          toast.show('You have already subscribed to this policy', {
+      if (insuranceDetails === undefined || insuranceDetails === null) {
+        navigation.navigate('HealthInsurance');
+      } else {
+        try {
+          toast.show('This may take a while ', {
             type: 'normal',
             placement: 'top',
             duration: 2000,
             animationType: 'slide-in',
           });
-          console.log('You have already subscribed to this policy');
+          setLoading(true);
+
+          const hasUserSubscribed = await checkUserSubscription(
+            user?.uid,
+            insuranceDetails.id,
+          );
+          // Check if the user has already subscribed
+
+          if (!hasUserSubscribed) {
+            const imageRef = storage().ref(
+              `HealthImages/${
+                user.uid + insuranceDetails.id + new Date().toISOString()
+              }`,
+            );
+            await imageRef.putFile(values.validId);
+            const validIdDownloadURL = await imageRef.getDownloadURL();
+            const medicalhistoryDownloadURL = await uploadDocumentToStorage(
+              values.medicalhistory,
+            );
+            // If the user hasn't subscribed, proceed with signup
+            const userPolicyRef = firestore().collection('userPolicies').doc();
+            await userPolicyRef.set({
+              user: {
+                ...user,
+              },
+              policy: {
+                ...insuranceDetails,
+              },
+              status: 'inProgress',
+              signedUpAt: new Date().toISOString(),
+              ExtraData: {
+                address: values.address,
+                validId: validIdDownloadURL,
+                medicalhistory: medicalhistoryDownloadURL,
+              },
+            });
+            setLoading(false);
+            setSuccessModalVisible(true);
+            console.log('User signed up successfully!');
+          } else {
+            setLoading(false);
+            toast.show('You have already subscribed to this policy', {
+              type: 'normal',
+              placement: 'top',
+              duration: 2000,
+              animationType: 'slide-in',
+            });
+            console.log('You have already subscribed to this policy');
+          }
+        } catch (error: any) {
+          setLoading(false);
+          console.log('Error during signup:', error);
+          toast.show('Error during signup', {
+            type: 'normal',
+            placement: 'top',
+            duration: 2000,
+            animationType: 'slide-in',
+          });
         }
-      } catch (error: any) {
-        setLoading(false);
-        console.log('Error during signup:', error);
-        toast.show('Error during signup', {
-          type: 'normal',
-          placement: 'top',
-          duration: 2000,
-          animationType: 'slide-in',
-        });
       }
     },
   });
@@ -188,7 +192,7 @@ const HealthInsuranceSignup = ({navigation, route}: any) => {
       />
       <SubHeader
         middleText={true}
-        title="Health Insurance Plan  SignUp"
+        title={insuranceDetails ? 'Health Insurance Plan  SignUp' : 'Details'}
         onPress={() => navigation.goBack()}
       />
       <View style={styles.container}>
